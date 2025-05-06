@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { interval } from 'rxjs';
 
 @Component({
   selector: 'app-server-status',
@@ -8,5 +9,19 @@ import { Component } from '@angular/core';
   styleUrl: './server-status.component.css',
 })
 export class ServerStatusComponent {
-  currentStatus = 'offline';
+  currentStatus: 'online' | 'offline' | 'unknown' = 'offline';
+
+  constructor() {
+    setInterval(() => {
+      const rand = Math.random();
+
+      if (rand < 0.5) {
+        this.currentStatus = 'online';
+      } else if (rand < 0.9) {
+        this.currentStatus = 'offline';
+      } else {
+        this.currentStatus = 'unknown';
+      }
+    }, 5000);
+  }
 }
